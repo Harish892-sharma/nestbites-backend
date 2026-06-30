@@ -21,7 +21,12 @@ public class BackendApplication {
 
     @Bean
     public MongoClient mongoClient() {
-        return MongoClients.create("mongodb+srv://myAtlasDBUser:Harry1234@myatlasclusteredu.ydotm6z.mongodb.net/gharkaKhana?retryWrites=true&w=majority&appName=myAtlasClusterEDU");
+        String uri = System.getenv("MONGODB_URI");
+        if (uri == null || uri.isEmpty()) {
+            // fallback for local testing only, replace with env var on Render
+            uri = "mongodb+srv://myAtlasDBUser:Harry1234@myatlasclusteredu.ydotm6z.mongodb.net/gharkaKhana?retryWrites=true&w=majority&appName=myAtlasClusterEDU";
+        }
+        return MongoClients.create(uri);
     }
 
     @Bean
@@ -29,7 +34,11 @@ public class BackendApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*");
+                registry.addMapping("/**")
+                        .allowedOrigins("https://nestbites.netlify.app", "http://localhost:3000")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }
