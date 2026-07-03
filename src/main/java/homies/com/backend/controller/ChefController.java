@@ -1,69 +1,52 @@
 package homies.com.backend.controller;
 
 import homies.com.backend.model.Chef;
-import homies.com.backend.model.MenuItem;
-import homies.com.backend.repository.ChefRepository;
+import homies.com.backend.service.ChefService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/chefs")
+@RequestMapping("/api/v1/chef")
 public class ChefController {
 
     @Autowired
-    private ChefRepository chefRepository;
+    private ChefService chefService;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
+    // Register Chef Profile
     @PostMapping("/register")
-    public ResponseEntity<Chef> register(@RequestBody Chef chef) {
-        chef.setPassword(passwordEncoder.encode(chef.getPassword()));
-        chef.setAvailable(true);
-        Chef savedChef = chefRepository.save(chef);
-        return ResponseEntity.ok(savedChef);
+    public ResponseEntity<Chef> registerChef(@RequestBody Chef chef) {
+        return ResponseEntity.ok(chefService.registerChef(chef));
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Chef loginRequest) {
-        try {
-            Chef chef = chefRepository.findFirstByEmail(loginRequest.getEmail());
-            
-            if (chef == null) {
-                return ResponseEntity.status(404).body("Chef nahi mila!");
-            }
-            
-            if (!passwordEncoder.matches(loginRequest.getPassword(), chef.getPassword())) {
-                return ResponseEntity.status(401).body("Password galat hai!");
-            }
-            
-            return ResponseEntity.ok(chef);
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error: " + e.getMessage());
-        }
+    // Get Chef By Id
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<Chef> getChef(@PathVariable String id) {
+        return ResponseEntity.ok(chefService.getChefById(id));
     }
 
+    // Update Chef Profile
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Chef> updateChef(
+            @PathVariable String id,
+            @RequestBody Chef chef) {
+
+        return ResponseEntity.ok(chefService.updateChef(id, chef));
+    }
+
+    // Get All Approved Chefs
     @GetMapping("/all")
-    public ResponseEntity<?> getAllChefs() {
-        return ResponseEntity.ok(chefRepository.findAll());
+    public ResponseEntity<List<Chef>> getApprovedChefs() {
+        return ResponseEntity.ok(chefService.getApprovedChefs());
     }
 
-    @PostMapping("/{chefId}/menu")
-    public ResponseEntity<?> addMenuItem(@PathVariable String chefId, @RequestBody MenuItem item) {
-        Chef chef = chefRepository.findById(chefId).orElse(null);
+    // Get Chefs By City
+    @GetMapping("/city/{city}")
+    public ResponseEntity<List<Chef>> getChefsByCity(
+            @PathVariable String city) {
 
-        if (chef == null) {
-            return ResponseEntity.status(404).body("Chef nahi mila!");
-        }
-
-        if (chef.getMenu() == null) {
-            chef.setMenu(new java.util.ArrayList<>());
-        }
-
-        chef.getMenu().add(item);
-        chefRepository.save(chef);
-
-        return ResponseEntity.ok(chef);
+        return ResponseEntity.ok(chefService.getChefsByCity(city));
     }
 }
