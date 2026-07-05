@@ -1,5 +1,6 @@
 package homies.com.backend.model;
 
+import homies.com.backend.model.enums.OrderStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,47 +13,46 @@ public class Order {
     @Id
     private String id;
 
-    // Customer
+    // ================= CUSTOMER =================
     private String userId;
     private String userName;
+    private String customerPhone;
 
-    // Chef
+    // ================= CHEF =================
     private String chefId;
     private String chefName;
+    private String chefPhone;
 
-    // Ordered Items
+    // ================= ORDER =================
     private List<OrderItem> items;
-
-    // Total Bill
     private double totalAmount;
 
-    // Delivery Address
+    // ================= DELIVERY =================
     private String deliveryAddress;
 
-    // Payment
+    // ================= PAYMENT =================
     private String paymentMethod;
     private String paymentStatus;
 
-    // Order Status
-    // PLACED
-    // ACCEPTED
-    // COOKING
-    // READY
-    // OUT_FOR_DELIVERY
-    // DELIVERED
-    // CANCELLED
-    private String status;
+    // ================= STATUS =================
+    private OrderStatus status;
 
-    // Dates
+    // ================= TIMELINE =================
     private Date createdAt;
+    private Date acceptedAt;
+    private Date preparingAt;
+    private Date outForDeliveryAt;
+    private Date deliveredAt;
+    private Date cancelledAt;
     private Date updatedAt;
 
     public Order() {
+        this.status = OrderStatus.PENDING;
         this.createdAt = new Date();
         this.updatedAt = new Date();
     }
 
-    // ===================== GETTERS & SETTERS =====================
+    // ================= GETTERS & SETTERS =================
 
     public String getId() {
         return id;
@@ -78,6 +78,14 @@ public class Order {
         this.userName = userName;
     }
 
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
+    }
+
     public String getChefId() {
         return chefId;
     }
@@ -92,6 +100,14 @@ public class Order {
 
     public void setChefName(String chefName) {
         this.chefName = chefName;
+    }
+
+    public String getChefPhone() {
+        return chefPhone;
+    }
+
+    public void setChefPhone(String chefPhone) {
+        this.chefPhone = chefPhone;
     }
 
     public List<OrderItem> getItems() {
@@ -134,11 +150,11 @@ public class Order {
         this.paymentStatus = paymentStatus;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
@@ -148,6 +164,46 @@ public class Order {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Date getAcceptedAt() {
+        return acceptedAt;
+    }
+
+    public void setAcceptedAt(Date acceptedAt) {
+        this.acceptedAt = acceptedAt;
+    }
+
+    public Date getPreparingAt() {
+        return preparingAt;
+    }
+
+    public void setPreparingAt(Date preparingAt) {
+        this.preparingAt = preparingAt;
+    }
+
+    public Date getOutForDeliveryAt() {
+        return outForDeliveryAt;
+    }
+
+    public void setOutForDeliveryAt(Date outForDeliveryAt) {
+        this.outForDeliveryAt = outForDeliveryAt;
+    }
+
+    public Date getDeliveredAt() {
+        return deliveredAt;
+    }
+
+    public void setDeliveredAt(Date deliveredAt) {
+        this.deliveredAt = deliveredAt;
+    }
+
+    public Date getCancelledAt() {
+        return cancelledAt;
+    }
+
+    public void setCancelledAt(Date cancelledAt) {
+        this.cancelledAt = cancelledAt;
     }
 
     public Date getUpdatedAt() {

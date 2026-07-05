@@ -12,4 +12,14 @@ public interface OrderService {
     List<OrderResponse> getOrdersByUser(String userId);
 
     List<OrderResponse> getOrdersByChef(String chefId);
+
+    OrderResponse acceptOrder(String orderId);
+
+    OrderResponse rejectOrder(String orderId);
+
+    OrderResponse startPreparing(String orderId);
+
+    OrderResponse outForDelivery(String orderId);
+
+    OrderResponse deliverOrder(String orderId);
 }

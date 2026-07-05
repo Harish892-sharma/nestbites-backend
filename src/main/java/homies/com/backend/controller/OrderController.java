@@ -17,6 +17,10 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    // =============================
+    // CUSTOMER
+    // =============================
+
     @PostMapping("/place")
     public ResponseEntity<OrderResponse> placeOrder(
             @RequestBody PlaceOrderRequest request) {
@@ -31,6 +35,10 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrdersByUser(userId));
     }
 
+    // =============================
+    // CHEF
+    // =============================
+
     @GetMapping("/chef/{chefId}")
     public ResponseEntity<List<OrderResponse>> getChefOrders(
             @PathVariable String chefId) {
@@ -38,4 +46,38 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrdersByChef(chefId));
     }
 
+    @PostMapping("/{orderId}/accept")
+    public ResponseEntity<OrderResponse> acceptOrder(
+            @PathVariable String orderId) {
+
+        return ResponseEntity.ok(orderService.acceptOrder(orderId));
+    }
+
+    @PostMapping("/{orderId}/reject")
+    public ResponseEntity<OrderResponse> rejectOrder(
+            @PathVariable String orderId) {
+
+        return ResponseEntity.ok(orderService.rejectOrder(orderId));
+    }
+
+    @PostMapping("/{orderId}/preparing")
+    public ResponseEntity<OrderResponse> preparingOrder(
+            @PathVariable String orderId) {
+
+        return ResponseEntity.ok(orderService.startPreparing(orderId));
+    }
+
+    @PostMapping("/{orderId}/out-for-delivery")
+    public ResponseEntity<OrderResponse> outForDelivery(
+            @PathVariable String orderId) {
+
+        return ResponseEntity.ok(orderService.outForDelivery(orderId));
+    }
+
+    @PostMapping("/{orderId}/deliver")
+    public ResponseEntity<OrderResponse> deliverOrder(
+            @PathVariable String orderId) {
+
+        return ResponseEntity.ok(orderService.deliverOrder(orderId));
+    }
 }
