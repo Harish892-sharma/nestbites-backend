@@ -22,4 +22,8 @@ public interface OrderService {
     OrderResponse outForDelivery(String orderId);
 
     OrderResponse deliverOrder(String orderId);
+
+    OrderResponse updateOrderStatus(String orderId, String status);
+    
+    OrderResponse getOrder(String orderId);
 }

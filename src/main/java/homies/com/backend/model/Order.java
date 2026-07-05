@@ -23,6 +23,11 @@ public class Order {
     private String chefName;
     private String chefPhone;
 
+    // ================= DELIVERY PARTNER (Future) =================
+    private String deliveryPartnerId;
+    private String deliveryPartnerName;
+    private String deliveryPartnerPhone;
+
     // ================= ORDER =================
     private List<OrderItem> items;
     private double totalAmount;
@@ -37,6 +42,12 @@ public class Order {
     // ================= STATUS =================
     private OrderStatus status;
 
+    // ================= CONTACT =================
+    private boolean contactUnlocked;
+
+    // ================= OTP (Future) =================
+    private String deliveryOtp;
+
     // ================= TIMELINE =================
     private Date createdAt;
     private Date acceptedAt;
@@ -48,6 +59,7 @@ public class Order {
 
     public Order() {
         this.status = OrderStatus.PENDING;
+        this.contactUnlocked = false;
         this.createdAt = new Date();
         this.updatedAt = new Date();
     }
@@ -110,6 +122,30 @@ public class Order {
         this.chefPhone = chefPhone;
     }
 
+    public String getDeliveryPartnerId() {
+        return deliveryPartnerId;
+    }
+
+    public void setDeliveryPartnerId(String deliveryPartnerId) {
+        this.deliveryPartnerId = deliveryPartnerId;
+    }
+
+    public String getDeliveryPartnerName() {
+        return deliveryPartnerName;
+    }
+
+    public void setDeliveryPartnerName(String deliveryPartnerName) {
+        this.deliveryPartnerName = deliveryPartnerName;
+    }
+
+    public String getDeliveryPartnerPhone() {
+        return deliveryPartnerPhone;
+    }
+
+    public void setDeliveryPartnerPhone(String deliveryPartnerPhone) {
+        this.deliveryPartnerPhone = deliveryPartnerPhone;
+    }
+
     public List<OrderItem> getItems() {
         return items;
     }
@@ -156,6 +192,22 @@ public class Order {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public boolean isContactUnlocked() {
+        return contactUnlocked;
+    }
+
+    public void setContactUnlocked(boolean contactUnlocked) {
+        this.contactUnlocked = contactUnlocked;
+    }
+
+    public String getDeliveryOtp() {
+        return deliveryOtp;
+    }
+
+    public void setDeliveryOtp(String deliveryOtp) {
+        this.deliveryOtp = deliveryOtp;
     }
 
     public Date getCreatedAt() {

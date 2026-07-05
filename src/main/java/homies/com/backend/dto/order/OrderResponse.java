@@ -20,6 +20,9 @@ public class OrderResponse {
 
     private String customerPhone;
 
+    // NEW
+    private boolean contactUnlocked;
+
     private Date createdAt;
 
     private Date updatedAt;
@@ -89,6 +92,14 @@ public class OrderResponse {
 
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
+    }
+
+    public boolean isContactUnlocked() {
+        return contactUnlocked;
+    }
+
+    public void setContactUnlocked(boolean contactUnlocked) {
+        this.contactUnlocked = contactUnlocked;
     }
 
     public Date getCreatedAt() {

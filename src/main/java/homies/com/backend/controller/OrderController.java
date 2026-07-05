@@ -2,8 +2,8 @@ package homies.com.backend.controller;
 
 import homies.com.backend.dto.order.OrderResponse;
 import homies.com.backend.dto.order.PlaceOrderRequest;
+import homies.com.backend.dto.order.UpdateOrderStatusRequest;
 import homies.com.backend.service.OrderService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +33,13 @@ public class OrderController {
             @PathVariable String userId) {
 
         return ResponseEntity.ok(orderService.getOrdersByUser(userId));
+    }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<OrderResponse> getOrder(
+            @PathVariable String orderId) {
+
+        return ResponseEntity.ok(orderService.getOrder(orderId));
     }
 
     // =============================
@@ -79,5 +86,15 @@ public class OrderController {
             @PathVariable String orderId) {
 
         return ResponseEntity.ok(orderService.deliverOrder(orderId));
+    }
+
+    @PutMapping("/{orderId}/status")
+    public ResponseEntity<OrderResponse> updateStatus(
+            @PathVariable String orderId,
+            @RequestBody UpdateOrderStatusRequest request) {
+
+        return ResponseEntity.ok(
+                orderService.updateOrderStatus(orderId, request.getStatus())
+        );
     }
 }
