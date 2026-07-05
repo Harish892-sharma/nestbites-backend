@@ -17,4 +17,11 @@ public interface ChefRepository extends MongoRepository<Chef, String> {
     List<Chef> findByCityIgnoreCase(String city);
 
     boolean existsByEmail(String email);
+
+    // Search
+    List<Chef> findByFullNameContainingIgnoreCase(String fullName);
+
+    List<Chef> findByCityContainingIgnoreCase(String city);
+
+    List<Chef> findByApprovedTrueAndFullNameContainingIgnoreCase(String fullName);
 }
