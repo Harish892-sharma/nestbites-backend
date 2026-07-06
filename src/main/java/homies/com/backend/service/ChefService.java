@@ -14,7 +14,13 @@ public interface ChefService {
 
     List<Chef> getApprovedChefs();
 
+    List<Chef> getPendingChefs();
+
     List<Chef> getChefsByCity(String city);
 
     Chef updateChef(String id, Chef chef);
+
+    Chef approveChef(String chefId);
+
+    Chef rejectChef(String chefId);
 }

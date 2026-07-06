@@ -49,6 +49,11 @@ public class ChefServiceImpl implements ChefService {
     }
 
     @Override
+    public List<Chef> getPendingChefs() {
+        return chefRepository.findByApprovedFalse();
+    }
+
+    @Override
     public List<Chef> getChefsByCity(String city) {
         return chefRepository.findByCityIgnoreCase(city);
     }
@@ -76,5 +81,26 @@ public class ChefServiceImpl implements ChefService {
         chef.setUpdatedAt(LocalDateTime.now());
 
         return chefRepository.save(chef);
+    }
+
+    @Override
+    public Chef approveChef(String chefId) {
+
+        Chef chef = getChefById(chefId);
+
+        chef.setApproved(true);
+        chef.setUpdatedAt(LocalDateTime.now());
+
+        return chefRepository.save(chef);
+    }
+
+    @Override
+    public Chef rejectChef(String chefId) {
+
+        Chef chef = getChefById(chefId);
+
+        chefRepository.delete(chef);
+
+        return chef;
     }
 }

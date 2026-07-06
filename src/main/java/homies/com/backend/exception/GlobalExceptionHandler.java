@@ -5,52 +5,39 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> handleNotFound(ResourceNotFoundException ex){
+    public ResponseEntity<ApiError> handleNotFound(ResourceNotFoundException ex) {
 
-        Map<String,Object> response = new HashMap<>();
+        ApiError error = new ApiError(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage()
+        );
 
-        response.put("success",false);
-        response.put("message",ex.getMessage());
-        response.put("time", LocalDateTime.now());
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<?> handleBadRequest(BadRequestException ex){
+    public ResponseEntity<ApiError> handleBadRequest(BadRequestException ex) {
 
-        Map<String,Object> response = new HashMap<>();
+        ApiError error = new ApiError(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage()
+        );
 
-        response.put("success",false);
-        response.put("message",ex.getMessage());
-        response.put("time",LocalDateTime.now());
-
-        return ResponseEntity.badRequest().body(response);
-
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleException(Exception ex){
+    public ResponseEntity<ApiError> handleException(Exception ex) {
 
-        Map<String,Object> response = new HashMap<>();
+        ApiError error = new ApiError(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                ex.getMessage()
+        );
 
-        response.put("success",false);
-        response.put("message","Internal Server Error");
-        response.put("error",ex.getMessage());
-        response.put("time",LocalDateTime.now());
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(response);
-
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }

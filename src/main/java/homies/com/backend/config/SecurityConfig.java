@@ -21,7 +21,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-
                 .csrf(csrf -> csrf.disable())
 
                 .sessionManagement(session ->
@@ -30,33 +29,55 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
+                        // ==========================
                         // Public APIs
+                        // ==========================
                         .requestMatchers(
                                 "/api/v1/auth/**",
-                                "/api/v1/test",
-                                "/api/upload/**",
-                                "/api/payment/**",
+                                "/api/v1/home/**",
+                                "/api/v1/search/**",
+                                "/api/v1/upload/**",
+                                "/api/v1/payment/**",
                                 "/v3/api-docs/**",
-                                "/swagger-ui/**"
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
                         ).permitAll()
 
+                        // ==========================
                         // Customer APIs
+                        // ==========================
                         .requestMatchers(
-                                "/api/cart/**",
-                                "/api/address/**"
+                                "/api/v1/cart/**",
+                                "/api/v1/address/**",
+                                "/api/v1/favorites/**",
+                                "/api/v1/reviews/**"
                         ).hasRole("CUSTOMER")
 
+                        // ==========================
                         // Chef APIs
+                        // ==========================
                         .requestMatchers(
-                                "/api/v1/menu/**"
+                                "/api/v1/menu/**",
+                                "/api/v1/chef/**"
                         ).hasRole("CHEF")
 
+                        // ==========================
                         // Customer + Chef
+                        // ==========================
                         .requestMatchers(
-                                "/api/orders/**"
+                                "/api/v1/orders/**"
                         ).hasAnyRole("CUSTOMER", "CHEF")
 
-                        // Everything else
+                        // ==========================
+                        // Admin APIs
+                        // ==========================
+                        .requestMatchers(
+                                "/api/v1/admin/**"
+                        ).hasRole("ADMIN")
+
+                        // ==========================
+                        // Everything Else
+                        // ==========================
                         .anyRequest().authenticated()
                 );
 
