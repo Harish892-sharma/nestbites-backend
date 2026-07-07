@@ -26,6 +26,11 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getPendingChefs());
     }
 
+    @GetMapping("/chef/approved")
+    public ResponseEntity<List<Chef>> approvedChefs() {
+        return ResponseEntity.ok(adminService.getApprovedChefs());
+    }
+
     @PutMapping("/chef/{chefId}/approve")
     public ResponseEntity<Chef> approveChef(@PathVariable String chefId) {
         return ResponseEntity.ok(adminService.approveChef(chefId));
@@ -34,5 +39,15 @@ public class AdminController {
     @DeleteMapping("/chef/{chefId}")
     public ResponseEntity<Chef> rejectChef(@PathVariable String chefId) {
         return ResponseEntity.ok(adminService.rejectChef(chefId));
+    }
+
+    @PutMapping("/chef/{chefId}/suspend")
+    public ResponseEntity<Chef> suspendChef(@PathVariable String chefId) {
+        return ResponseEntity.ok(adminService.suspendChef(chefId));
+    }
+
+    @PutMapping("/chef/{chefId}/activate")
+    public ResponseEntity<Chef> activateChef(@PathVariable String chefId) {
+        return ResponseEntity.ok(adminService.activateChef(chefId));
     }
 }

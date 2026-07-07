@@ -70,4 +70,31 @@ public class AdminServiceImpl implements AdminService {
 
         return chef;
     }
+
+    @Override
+    public List<Chef> getApprovedChefs() {
+        return chefRepository.findByApprovedTrue();
+    }
+
+    @Override
+    public Chef suspendChef(String chefId) {
+
+        Chef chef = chefRepository.findById(chefId)
+                .orElseThrow(() -> new RuntimeException("Chef not found"));
+
+        chef.setActive(false);
+
+        return chefRepository.save(chef);
+    }
+
+    @Override
+    public Chef activateChef(String chefId) {
+
+        Chef chef = chefRepository.findById(chefId)
+                .orElseThrow(() -> new RuntimeException("Chef not found"));
+
+        chef.setActive(true);
+
+        return chefRepository.save(chef);
+    }
 }

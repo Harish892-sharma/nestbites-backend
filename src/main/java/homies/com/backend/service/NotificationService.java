@@ -19,4 +19,7 @@ public interface NotificationService {
 
     Notification markAsRead(String notificationId);
 
+    long getUnreadCount(String userId);
+
+    void clearAllNotifications(String userId);
 }

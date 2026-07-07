@@ -12,13 +12,34 @@ public interface ChefRepository extends MongoRepository<Chef, String> {
 
     Optional<Chef> findByUserId(String userId);
 
+    boolean existsByEmail(String email);
+
+    // ================= Approval =================
+
     List<Chef> findByApprovedTrue();
 
     List<Chef> findByApprovedFalse();
 
+    // ================= Active =================
+
+    List<Chef> findByActiveTrue();
+
+    List<Chef> findByActiveFalse();
+
+    // ================= Approved + Active =================
+
+    List<Chef> findByApprovedTrueAndActiveTrue();
+
+    // ================= Search =================
+
     List<Chef> findByCityIgnoreCase(String city);
 
-    boolean existsByEmail(String email);
-
     List<Chef> findByApprovedTrueAndFullNameContainingIgnoreCase(String fullName);
+
+    List<Chef> findByApprovedTrueAndCityIgnoreCase(String city);
+
+    // ================= Rating =================
+
+    List<Chef> findTop10ByApprovedTrueOrderByRatingDesc();
+
 }

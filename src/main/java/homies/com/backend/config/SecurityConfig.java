@@ -34,10 +34,10 @@ public class SecurityConfig {
                         // ==========================
                         .requestMatchers(
                                 "/api/v1/auth/**",
-                                "/api/v1/home/**",
-                                "/api/v1/search/**",
-                                "/api/v1/upload/**",
-                                "/api/v1/payment/**",
+                                "/api/home/**",
+                                "/api/search/**",
+                                "/api/upload/**",
+                                "/api/payment/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
@@ -47,10 +47,11 @@ public class SecurityConfig {
                         // Customer APIs
                         // ==========================
                         .requestMatchers(
-                                "/api/v1/cart/**",
-                                "/api/v1/address/**",
-                                "/api/v1/favorites/**",
-                                "/api/v1/reviews/**"
+                                "/api/cart/**",
+                                "/api/address/**",
+                                "/api/favorites/**",
+                                "/api/reviews/**",
+                                "/api/notifications/**"
                         ).hasRole("CUSTOMER")
 
                         // ==========================
@@ -65,14 +66,14 @@ public class SecurityConfig {
                         // Customer + Chef
                         // ==========================
                         .requestMatchers(
-                                "/api/v1/orders/**"
+                                "/api/orders/**"
                         ).hasAnyRole("CUSTOMER", "CHEF")
 
                         // ==========================
                         // Admin APIs
                         // ==========================
                         .requestMatchers(
-                                "/api/v1/admin/**"
+                                "/api/admin/**"
                         ).hasRole("ADMIN")
 
                         // ==========================

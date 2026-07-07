@@ -11,7 +11,13 @@ public interface AdminService {
 
     List<Chef> getPendingChefs();
 
+    List<Chef> getApprovedChefs();
+
     Chef approveChef(String chefId);
 
     Chef rejectChef(String chefId);
+
+    Chef suspendChef(String chefId);
+
+    Chef activateChef(String chefId);
 }

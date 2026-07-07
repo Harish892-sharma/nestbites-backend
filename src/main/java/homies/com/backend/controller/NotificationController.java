@@ -33,4 +33,22 @@ public class NotificationController {
                 notificationService.markAsRead(notificationId)
         );
     }
+
+    @GetMapping("/{userId}/unread-count")
+    public ResponseEntity<Long> unreadCount(
+            @PathVariable String userId) {
+
+        return ResponseEntity.ok(
+                notificationService.getUnreadCount(userId)
+       );
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> clearNotifications(
+            @PathVariable String userId) {
+
+                notificationService.clearAllNotifications(userId);
+
+        return ResponseEntity.ok("Notifications Cleared");
+    }
 }

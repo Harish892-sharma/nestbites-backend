@@ -34,6 +34,27 @@ public class Order {
 
     // ================= DELIVERY =================
     private String deliveryAddress;
+    // Delivery Location
+    private double deliveryLatitude;
+    private double deliveryLongitude;
+
+    // Delivery Charges
+    private double deliveryFee;
+
+    // Tax
+    private double platformFee;
+
+   // Discount
+    private double discountAmount;
+
+     // Final Bill
+    private double payableAmount;
+
+      // Delivery Time
+    private int estimatedDeliveryMinutes;
+
+     // Order Note 
+    private String customerNote;
 
     // ================= PAYMENT =================
     private String paymentMethod;
@@ -165,6 +186,70 @@ public class Order {
     public String getDeliveryAddress() {
         return deliveryAddress;
     }
+
+    public double getDeliveryLatitude() {
+        return deliveryLatitude;
+    }
+
+    public void setDeliveryLatitude(double deliveryLatitude) {
+        this.deliveryLatitude = deliveryLatitude;
+    }
+
+    public double getDeliveryLongitude() {
+        return deliveryLongitude;
+    }
+
+    public void setDeliveryLongitude(double deliveryLongitude) {
+        this.deliveryLongitude = deliveryLongitude;
+    }
+
+    public double getDeliveryFee() {
+        return deliveryFee;
+    }
+
+    public void setDeliveryFee(double deliveryFee) {
+        this.deliveryFee = deliveryFee;
+    }
+
+    public double getPlatformFee() {
+        return platformFee;
+    }
+
+    public void setPlatformFee(double platformFee) {
+        this.platformFee = platformFee;
+    }
+
+    public double getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(double discountAmount) {
+       this.discountAmount = discountAmount;
+    }
+
+    public double getPayableAmount() {
+    return payableAmount;
+}
+
+    public void setPayableAmount(double payableAmount) {
+        this.payableAmount = payableAmount;
+    }
+
+    public int getEstimatedDeliveryMinutes() {
+        return estimatedDeliveryMinutes;
+    }
+
+    public void setEstimatedDeliveryMinutes(int estimatedDeliveryMinutes) {
+        this.estimatedDeliveryMinutes = estimatedDeliveryMinutes;
+    }
+
+    public String getCustomerNote() {
+    return customerNote;
+}
+
+    public void setCustomerNote(String customerNote) {
+        this.customerNote = customerNote;
+   }
 
     public void setDeliveryAddress(String deliveryAddress) {
         this.deliveryAddress = deliveryAddress;

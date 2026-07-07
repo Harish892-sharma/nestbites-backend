@@ -50,4 +50,14 @@ public class NotificationServiceImpl implements NotificationService {
 
         return notificationRepository.save(notification);
     }
+
+    @Override
+    public long getUnreadCount(String userId) {
+        return notificationRepository.countByUserIdAndReadFalse(userId);
+    }
+
+    @Override
+    public void clearAllNotifications(String userId) {
+        notificationRepository.deleteByUserId(userId);
+    }
 }

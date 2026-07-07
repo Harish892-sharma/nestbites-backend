@@ -7,24 +7,51 @@ import java.util.List;
 
 public interface MenuItemRepository extends MongoRepository<MenuItem, String> {
 
+    // Chef
     List<MenuItem> findByChefId(String chefId);
 
+    // Category
     List<MenuItem> findByCategoryIgnoreCase(String category);
 
+    // Available Food
     List<MenuItem> findByAvailableTrue();
 
-    // Search by Dish Name
+    // Dish Name
     List<MenuItem> findByNameContainingIgnoreCase(String name);
 
-    // Search by Category
+    // Category Search
     List<MenuItem> findByCategoryContainingIgnoreCase(String category);
 
-    // Search by Description
+    // Description Search
     List<MenuItem> findByDescriptionContainingIgnoreCase(String description);
 
-    // Search by Price Range
+    // Price
     List<MenuItem> findByPriceBetween(double minPrice, double maxPrice);
 
-    // Available + Dish Name
+    // Available + Name
     List<MenuItem> findByAvailableTrueAndNameContainingIgnoreCase(String keyword);
+
+    // Today's Special
+    List<MenuItem> findByTodaysSpecialTrue();
+
+    // Best Seller
+    List<MenuItem> findByBestsellerTrue();
+
+    // Healthy
+    List<MenuItem> findByHealthyTrue();
+
+    // Home Tiffin
+    List<MenuItem> findByHomeTiffinTrue();
+
+    // Veg
+    List<MenuItem> findByVegTrue();
+
+    // Non Veg
+    List<MenuItem> findByVegFalse();
+
+    // Meal Type
+    List<MenuItem> findByMealTypeIgnoreCase(String mealType);
+
+    // Chef + Available
+    List<MenuItem> findByChefIdAndAvailableTrue(String chefId);
 }

@@ -6,7 +6,6 @@ import homies.com.backend.model.MenuItem;
 import homies.com.backend.repository.ChefRepository;
 import homies.com.backend.repository.MenuItemRepository;
 import homies.com.backend.service.home.HomeService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,32 +28,80 @@ public class HomeServiceImpl implements HomeService {
 
         HomeResponse response = new HomeResponse();
 
-        // Approved chefs
-        List<Chef> chefs = chefRepository.findByApprovedTrue();
+        // ================= CHEFS =================
 
-        // Available dishes
-        List<MenuItem> dishes = menuItemRepository.findByAvailableTrue();
+        List<Chef> approvedChefs = chefRepository.findByApprovedTrue();
 
-        response.setTopRatedChefs(chefs);
+        response.setTopRatedChefs(approvedChefs);
+        response.setNearbyChefs(approvedChefs);
+        response.setNewlyJoinedChefs(approvedChefs);
 
-        response.setPopularDishes(dishes);
+        // ================= MENU =================
 
-        response.setNearbyChefs(chefs);
+        List<MenuItem> availableFoods = menuItemRepository.findByAvailableTrue();
 
-        response.setRecommendedDishes(dishes);
+        response.setPopularDishes(availableFoods);
+        response.setRecommendedDishes(availableFoods);
 
-        Set<String> categorySet = new LinkedHashSet<>();
+        // Today's Special
+        response.setTodaysSpecials(
+                menuItemRepository.findByTodaysSpecialTrue()
+        );
 
-        for (MenuItem item : dishes) {
+        // Best Seller
+        response.setBestSellers(
+                menuItemRepository.findByBestsellerTrue()
+        );
+
+        // Healthy
+        response.setHealthyMeals(
+                menuItemRepository.findByHealthyTrue()
+        );
+
+        // Home Tiffin
+        response.setHomeTiffins(
+                menuItemRepository.findByHomeTiffinTrue()
+        );
+
+        // Veg
+        response.setVegMeals(
+                menuItemRepository.findByVegTrue()
+        );
+
+        // Non Veg
+        response.setNonVegMeals(
+                menuItemRepository.findByVegFalse()
+        );
+
+        // Breakfast
+        response.setBreakfast(
+                menuItemRepository.findByMealTypeIgnoreCase("BREAKFAST")
+        );
+
+        // Lunch
+        response.setLunch(
+                menuItemRepository.findByMealTypeIgnoreCase("LUNCH")
+        );
+
+        // Dinner
+        response.setDinner(
+                menuItemRepository.findByMealTypeIgnoreCase("DINNER")
+        );
+
+        // ================= CATEGORIES =================
+
+        Set<String> categories = new LinkedHashSet<>();
+
+        for (MenuItem item : availableFoods) {
 
             if (item.getCategory() != null &&
-                !item.getCategory().isBlank()) {
+                    !item.getCategory().isBlank()) {
 
-                categorySet.add(item.getCategory());
+                categories.add(item.getCategory());
             }
         }
 
-        response.setCategories(new ArrayList<>(categorySet));
+        response.setCategories(new ArrayList<>(categories));
 
         return response;
     }

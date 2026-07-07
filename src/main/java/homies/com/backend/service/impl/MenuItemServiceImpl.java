@@ -6,6 +6,7 @@ import homies.com.backend.service.MenuItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -16,6 +17,24 @@ public class MenuItemServiceImpl implements MenuItemService {
 
     @Override
     public MenuItem addMenuItem(MenuItem menuItem) {
+
+        if (menuItem.getChefId() == null || menuItem.getChefId().isBlank()) {
+            throw new RuntimeException("Chef Id is required");
+        }
+
+        if (menuItem.getName() == null || menuItem.getName().isBlank()) {
+            throw new RuntimeException("Food name is required");
+        }
+
+        if (menuItem.getPrice() <= 0) {
+            throw new RuntimeException("Price must be greater than zero");
+        }
+
+        menuItem.setFinalPrice(menuItem.getPrice() - menuItem.getDiscount());
+        menuItem.setAvailable(true);
+        menuItem.setCreatedAt(LocalDateTime.now());
+        menuItem.setUpdatedAt(LocalDateTime.now());
+
         return menuItemRepository.save(menuItem);
     }
 
@@ -28,20 +47,50 @@ public class MenuItemServiceImpl implements MenuItemService {
         existing.setName(menuItem.getName());
         existing.setDescription(menuItem.getDescription());
         existing.setCategory(menuItem.getCategory());
+
         existing.setPrice(menuItem.getPrice());
+        existing.setDiscount(menuItem.getDiscount());
+        existing.setFinalPrice(menuItem.getPrice() - menuItem.getDiscount());
+
+        existing.setServingSize(menuItem.getServingSize());
+
+        existing.setVeg(menuItem.isVeg());
+        existing.setSpiceLevel(menuItem.getSpiceLevel());
+        existing.setCuisine(menuItem.getCuisine());
+        existing.setCalories(menuItem.getCalories());
+
+        existing.setHomemade(menuItem.isHomemade());
+        existing.setTodaysSpecial(menuItem.isTodaysSpecial());
+        existing.setBestseller(menuItem.isBestseller());
+
+        existing.setPreparationTime(menuItem.getPreparationTime());
+        existing.setStock(menuItem.getStock());
+
         existing.setImageUrl(menuItem.getImageUrl());
+
         existing.setAvailable(menuItem.isAvailable());
+        existing.setActive(menuItem.isActive());
+
+        existing.setIngredients(menuItem.getIngredients());
+        existing.setTags(menuItem.getTags());
+
+        existing.setUpdatedAt(LocalDateTime.now());
 
         return menuItemRepository.save(existing);
     }
 
     @Override
     public void deleteMenuItem(String id) {
-        menuItemRepository.deleteById(id);
+
+        MenuItem existing = menuItemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Menu item not found"));
+
+        menuItemRepository.delete(existing);
     }
 
     @Override
     public MenuItem getMenuItemById(String id) {
+
         return menuItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Menu item not found"));
     }
