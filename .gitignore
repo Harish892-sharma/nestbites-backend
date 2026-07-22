@@ -1,0 +1,24 @@
+target/
+.idea/
+.vscode/
+
+*.class
+*.log
+
+.env
+
+# Local-only secrets — real credentials go here, never committed.
+# Copy application-secrets.properties.example to this filename and fill it in.
+application-secrets.properties
+
+uploads/
+
+.DS_Store
+
+*.iml
+
+out/
+
+node_modules/
+
+*.jar
